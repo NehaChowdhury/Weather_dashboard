@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+venv/
+.venv/
+
+# Backend secrets and local DB
+backend/.env
+backend/*.db
+backend/*.sqlite3
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# ML
+ml/rain_model.pkl
+ml/weatherAUS.csv
+
+# IDE/OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
