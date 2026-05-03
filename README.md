@@ -4,6 +4,8 @@
 [![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-blue)]()
 [![Backend](https://img.shields.io/badge/Backend-FastAPI-009688)]()
 
+### 🔗 [Live Demo: weather-dashboard-teal-phi.vercel.app](https://weather-dashboard-teal-phi.vercel.app)
+
 A high-performance, AI-driven weather intelligence platform. This dashboard provides real-time meteorological data, long-range forecasts, and machine learning-powered rain predictions, all wrapped in a premium **Glassmorphic UI**.
 
 ## ✨ Key Features
