@@ -54,7 +54,7 @@ def get_weather(city: str = Query(...), query: str = Query("", description="Opti
                 chat_response = f"Yes, you should take an umbrella. There is a {prediction['probability']}% chance of rain."
             else:
                 chat_response = "No need for an umbrella. It's not expected to rain."
-        elif "outside" in q or "out" in q or "walk" in q or "run" in q:
+        elif any(word in q for word in ["outside", "out", "walk", "run"]):
             if will_rain:
                 chat_response = "It might rain, so taking an umbrella is a good idea if you go outside."
             elif temp > 35:

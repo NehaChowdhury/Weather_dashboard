@@ -8,3 +8,4 @@ email-validator
 requests
 pandas
 scikit-learn
+gunicorn

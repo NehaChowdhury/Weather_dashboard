@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create the axios instance
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000', // Ensure your FastAPI server is running here
+  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -29,7 +29,7 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       console.warn("Unauthorized! Clearing token and redirecting to login...");
       localStorage.removeItem('access_token');
-      // window.location.href = '/login'; // Optional: auto-redirect
+      localStorage.removeItem('user_email');
     }
     return Promise.reject(error);
   }

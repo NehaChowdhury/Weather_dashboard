@@ -1,26 +1,28 @@
 # Smart Weather AI Dashboard 🌦️
 
-A full-stack, AI-powered weather dashboard that provides real-time weather data, 5-day forecasts, and machine learning-driven rain predictions. Features a modern glassmorphic UI and a smart decision engine to help users plan their day.
+[![Status](https://img.shields.io/badge/Status-Production--Ready-emerald)]()
+[![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-blue)]()
+[![Backend](https://img.shields.io/badge/Backend-FastAPI-009688)]()
 
-## 🚀 Key Features
+A high-performance, AI-driven weather intelligence platform. This dashboard provides real-time meteorological data, long-range forecasts, and machine learning-powered rain predictions, all wrapped in a premium **Glassmorphic UI**.
 
-- **Real-time Weather**: Current temperature, humidity, and weather conditions via OpenWeatherMap API.
-- **5-Day Forecast**: Visualized data for the week ahead.
-- **AI Rain Prediction**: A Machine Learning model (Random Forest) that predicts the likelihood of rain tomorrow based on current meteorological data.
-- **Smart Decision Engine**: Automated advice (e.g., "Take an umbrella", "Stay hydrated", "Wear warm clothes") based on weather analysis.
-- **Interactive Chatbot**: Ask questions like "Should I take an umbrella?" or "Is it good to go outside?"
-- **Secure Authentication**: JWT-based user registration and login system.
-- **Premium UI**: Glassmorphic design with responsive layouts and smooth animations.
+## ✨ Key Features
+
+- **🧠 ML Prediction Engine**: Utilizes a Random Forest classifier to predict the probability of rain tomorrow with high accuracy.
+- **💬 AI Neural Response**: An interactive chat assistant that answers weather-specific queries (e.g., *"Will it rain tomorrow?"*).
+- **🎨 Premium UX**: Fully responsive Glassmorphic design with dark/light mode support, smooth transitions, and a mobile-first approach.
+- **📍 Global Tracking**: Real-time data for any city worldwide via the OpenWeatherMap API.
+- **🔒 Enterprise Auth**: Secure JWT-based authentication system with encrypted session handling.
+- **📊 5-Day Outlook**: Meteorological data visualization for upcoming week planning.
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React, Vite, TailwindCSS, Axios, Lucide React (Icons).
-- **Backend**: FastAPI (Python), JWT (Jose), SQLAlchemy (SQLite).
-- **Machine Learning**: Scikit-learn, Pandas, NumPy.
-- **Database**: SQLite.
-- **API**: OpenWeatherMap.
+- **Frontend**: React, Vite, Tailwind CSS, Axios.
+- **Backend**: FastAPI (Python), SQLAlchemy, JWT (Jose).
+- **Data Science**: Scikit-learn, Pandas, NumPy.
+- **Deployment**: Render (Backend), Vercel/Netlify (Frontend).
 
-## 📦 Project Structure
+## 📂 Project Structure
 
 ```text
 weather-dashboard/
@@ -34,68 +36,51 @@ weather-dashboard/
 │   ├── src/            # Components and Pages
 │   └── package.json    # Frontend dependencies
 ├── ml/                 # Machine Learning assets
-│   ├── train.py        # Model training script
-│   └── weatherAUS.csv  # Training dataset
 └── README.md           # Project documentation
 ```
 
-## ⚙️ Setup & Installation
+## ⚙️ Local Development
 
 ### 1. Backend Setup
-1. Navigate to the backend folder:
-   ```bash
-   cd backend
-   ```
-2. Create a virtual environment and activate it:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Create a `.env` file and add your OpenWeatherMap API Key:
-   ```env
-   OPENWEATHER_API_KEY=your_api_key_here
-   SECRET_KEY=your_jwt_secret_key
-   ```
-5. Start the backend:
-   ```bash
-   uvicorn main:app --reload
-   ```
+```bash
+cd backend
+python -m venv venv
+# Windows: venv\Scripts\activate | Unix: source venv/bin/activate
+pip install -r requirements.txt
+```
+Start the server: `uvicorn main:app --reload`
 
 ### 2. Frontend Setup
-1. Navigate to the frontend folder:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-### 3. Machine Learning Model
-The project includes a training script. To generate the `rain_model.pkl` file (required for the dashboard):
-1. Navigate to the `ml/` folder.
-2. Run the training script:
-   ```bash
-   python train.py
-   ```
-   *Note: This will process the `weatherAUS.csv` dataset and save the model.*
-
-## 🧪 Usage
-1. Register/Login to your account.
-2. Search for any city to see real-time data.
-3. View the AI prediction for rain tomorrow.
-4. Interact with the chat engine for personalized weather advice.
-
-## 🛡️ License
-Distributed under the MIT License. See `LICENSE` for more information.
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ---
-Built with ❤️ by [Neha Chowdhury](https://github.com/NehaChowdhury)
+
+## 🚀 Deployment Guide
+
+### Backend (Render)
+1. Create a new **Web Service** on Render and connect your repository.
+2. Set **Root Directory** to `backend`.
+3. **Build Command**: `pip install -r requirements.txt`
+4. **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+
+### Frontend (Vercel)
+1. Create a new project on Vercel and select the `frontend` folder.
+2. Set the **Environment Variable** `VITE_API_URL` to your Render backend URL.
+3. Click **Deploy**.
+
+---
+
+## 🧪 Machine Learning Model
+The project includes a training pipeline to regenerate the model:
+1. Navigate to `ml/`.
+2. Run `python train.py` to process `weatherAUS.csv` and generate `rain_model.pkl`.
+
+## 🛡️ License
+Distributed under the MIT License.
+
+---
+Built with ✨ by [Neha Chowdhury](https://github.com/NehaChowdhury)
