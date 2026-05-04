@@ -6,12 +6,18 @@ import numpy as np
 # Path to the trained model (now compressed with joblib)
 MODEL_PATH = os.path.join(os.path.dirname(__file__), 'rain_model.joblib')
 
-if os.path.exists(MODEL_PATH):
-    model = joblib.load(MODEL_PATH)
-else:
-    model = None
+model = None
+model_loaded = False
+
+def load_model_if_needed():
+    global model, model_loaded
+    if not model_loaded:
+        if os.path.exists(MODEL_PATH):
+            model = joblib.load(MODEL_PATH)
+        model_loaded = True
 
 def predict_rain(api_data: dict):
+    load_model_if_needed()
     if model is None:
         return {"predict_rain": 0, "probability": 0}
         
