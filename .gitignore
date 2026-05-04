@@ -27,3 +27,5 @@ ml/weatherAUS.csv
 Thumbs.db
 .vscode/
 .idea/
+.env
+weather-dashboard/backend/.env
