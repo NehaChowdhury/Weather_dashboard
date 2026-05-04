@@ -14,8 +14,13 @@ load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".env", override=True)
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 SECRET_KEY = os.getenv("SECRET_KEY", "change-this-in-production")
+if SECRET_KEY == "change-this-in-production":
+    import warnings
+    warnings.warn("[SECURITY] You are using the default SECRET_KEY. Set a strong SECRET_KEY in your environment for production!")
 ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
+
+# NOTE: For production, use a persistent database (not SQLite) and a strong SECRET_KEY.
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 class RegisterRequest(BaseModel):

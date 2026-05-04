@@ -4,7 +4,7 @@ import api from '../api'
 
 function DashboardPage() {
   const navigate = useNavigate()
-  const [city, setCity] = useState('London')
+  const [city, setCity] = useState('Guwahati')
   const [chatInput, setChatInput] = useState('')
   const [isDark, setIsDark] = useState(false)
   const [weather, setWeather] = useState(null)
@@ -23,8 +23,6 @@ function DashboardPage() {
   useEffect(() => {
     if (!localStorage.getItem('access_token')) {
       navigate('/login')
-    } else {
-      fetchWeather() // Optional: auto-fetch on mount if desired, but waiting for user input is fine too. We'll leave it out for simplicity or we can add it later.
     }
   }, [navigate])
 
@@ -37,16 +35,23 @@ function DashboardPage() {
       const response = await api.get('/weather', { params: { city, query: chatInput } })
       const data = response.data
       
+      // We check if data.weather.temp is already a string or a number
+      const tempVal = data.weather.temp
+      const displayTemp = typeof tempVal === 'string' && tempVal.includes('°C') 
+        ? tempVal 
+        : `${tempVal}°C`
+
       setWeather({
-        city: data.weather.city,
-        temperature: `${data.weather.temp}°C`,
-        icon: '⛅',
+        city: data.weather.city || city,
+        temperature: displayTemp,
+        // Dynamic icon based on prediction: 1 is Rain, 0 is Clear
+        icon: data.prediction === 1 ? '🌧️' : '☀️',
         description: data.weather.description,
       })
 
-      setForecast(data.forecast)
+      setForecast(data.forecast || [])
       setPrediction(data.prediction)
-      setDecisions(data.decision)
+      setDecisions(data.decision || [])
       
       if (chatInput.trim() !== '') {
          setChatResponse(data.chat_response)
@@ -63,7 +68,7 @@ function DashboardPage() {
         navigate('/login')
         return
       }
-      setError(err.response?.data?.detail || 'Could not fetch weather')
+      setError(err.response?.data?.detail || err.message || 'The server is waking up. Please try again in seconds.')
     } finally {
       setLoading(false)
     }
@@ -118,7 +123,7 @@ function DashboardPage() {
                 type="text"
                 value={city}
                 onChange={(event) => setCity(event.target.value)}
-                placeholder="Enter city (e.g. New York)"
+                placeholder="Enter city (e.g. Guwahati)"
                 className="w-full rounded-2xl border border-white/50 bg-white/80 px-4 py-3 text-slate-800 shadow-inner outline-none transition focus:ring-2 focus:ring-cyan-500/50 dark:border-slate-700 dark:bg-slate-950/80 dark:text-white"
               />
             </div>
@@ -132,7 +137,7 @@ function DashboardPage() {
                 type="text"
                 value={chatInput}
                 onChange={(event) => setChatInput(event.target.value)}
-                placeholder="Ask: 'Will it rain tomorrow?'"
+                placeholder="Ask: 'Should I carry an umbrella?'"
                 className="w-full rounded-2xl border border-white/50 bg-white/80 px-4 py-3 text-slate-800 shadow-inner outline-none transition focus:ring-2 focus:ring-indigo-500/50 dark:border-slate-700 dark:bg-slate-950/80 dark:text-white"
               />
             </div>
@@ -232,8 +237,12 @@ function DashboardPage() {
                         <p className="text-[10px] font-black text-slate-500 dark:text-slate-400">
                           {new Date(day.date).toLocaleDateString('en-US', { weekday: 'short' })}
                         </p>
-                        <p className="my-3 text-2xl">🌦️</p>
-                        <p className="text-lg font-black text-slate-900 dark:text-white">{Math.round(day.temp)}°</p>
+                        <p className="my-3 text-2xl">
+                          {day.temp > 25 ? '☀️' : day.temp < 15 ? '☁️' : '🌦️'}
+                        </p>
+                        <p className="text-lg font-black text-slate-900 dark:text-white">
+                          {typeof day.temp === 'string' ? day.temp.replace('°C', '') : Math.round(day.temp)}°
+                        </p>
                         <p className="mt-1 text-[9px] font-bold text-slate-400">{new Date(day.date).getDate()}/{new Date(day.date).getMonth()+1}</p>
                       </div>
                     ))

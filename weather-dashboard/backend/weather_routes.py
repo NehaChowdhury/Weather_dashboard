@@ -11,9 +11,10 @@ router = APIRouter(prefix="/weather", tags=["weather"])
 @router.get("")
 def get_weather(city: str = Query(...), query: str = Query("", description="Optional chat query")):
     api_key = os.getenv("OPENWEATHER_API_KEY")
-    
+    if not api_key:
+        raise HTTPException(status_code=500, detail="OPENWEATHER_API_KEY is not set on the server.")
     # 1. Current Weather
-    url_weather = "http://api.openweathermap.org/data/2.5/weather"
+    url_weather = "https://api.openweathermap.org/data/2.5/weather"
     res_weather = requests.get(url_weather, params={"q": city, "appid": api_key, "units": "metric"})
     if res_weather.status_code != 200:
         raise HTTPException(status_code=404, detail="City not found")
@@ -21,7 +22,7 @@ def get_weather(city: str = Query(...), query: str = Query("", description="Opti
     temp = data_weather["main"]["temp"]
     
     # 2. Forecast
-    url_forecast = "http://api.openweathermap.org/data/2.5/forecast"
+    url_forecast = "https://api.openweathermap.org/data/2.5/forecast"
     res_forecast = requests.get(url_forecast, params={"q": city, "appid": api_key, "units": "metric"})
     forecast_data = []
     if res_forecast.status_code == 200:
