@@ -1,6 +1,5 @@
 import joblib
 import os
-import pandas as pd
 import numpy as np
 
 # Path to the trained model (now compressed with joblib)
@@ -13,7 +12,7 @@ def load_model_if_needed():
     global model, model_loaded
     if not model_loaded:
         if os.path.exists(MODEL_PATH):
-            model = joblib.load(MODEL_PATH)
+            model = joblib.load(MODEL_PATH, mmap_mode='r')
         model_loaded = True
 
 def predict_rain(api_data: dict):
@@ -38,23 +37,15 @@ def predict_rain(api_data: dict):
         rainfall = rain.get("1h", 0.0)
         rain_today = 1 if 'rain' in weather.get("main", "").lower() else 0
         
-        input_data = pd.DataFrame([{
-            'MinTemp': temp_min,
-            'MaxTemp': temp_max,
-            'Rainfall': rainfall,
-            'WindGustSpeed': wind_gust_kmh,
-            'WindSpeed9am': wind_speed_kmh,
-            'WindSpeed3pm': wind_speed_kmh,
-            'Humidity9am': humidity,
-            'Humidity3pm': humidity,
-            'Pressure9am': pressure,
-            'Pressure3pm': pressure,
-            'Temp9am': temp,
-            'Temp3pm': temp,
-            'RainToday': rain_today
-        }])
-        
-        prob = model.predict_proba(input_data)[0][1]
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            input_data = np.array([[
+                temp_min, temp_max, rainfall, wind_gust_kmh,
+                wind_speed_kmh, wind_speed_kmh, humidity, humidity,
+                pressure, pressure, temp, temp, rain_today
+            ]])
+            prob = model.predict_proba(input_data)[0][1]
         return {
             "predict_rain": 1 if prob >= 0.5 else 0,
             "probability": round(prob * 100, 2)

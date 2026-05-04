@@ -6,7 +6,6 @@ passlib
 python-dotenv
 email-validator
 requests
-pandas
 scikit-learn>=1.3.0
 gunicorn
 joblib
