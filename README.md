@@ -33,11 +33,12 @@ weather-dashboard/
 │   ├── main.py         # Application entry point
 │   ├── ml_model.py     # ML inference and decision logic
 │   ├── models.py       # Database models
+│   ├── rain_model.joblib # Compressed ML model
 │   └── weather_routes.py # Weather API and Chat logic
 ├── frontend/           # React + Vite source code
 │   ├── src/            # Components and Pages
 │   └── package.json    # Frontend dependencies
-├── ml/                 # Machine Learning assets
+├── ml/                 # Machine Learning training scripts
 └── README.md           # Project documentation
 ```
 
@@ -77,9 +78,10 @@ npm run dev
 ---
 
 ## 🧪 Machine Learning Model
-The project includes a training pipeline to regenerate the model:
+The project uses a compressed Random Forest model (`backend/rain_model.joblib`) to stay under GitHub's file size limits for easy deployment.
+To regenerate the model:
 1. Navigate to `ml/`.
-2. Run `python train.py` to process `weatherAUS.csv` and generate `rain_model.pkl`.
+2. Run `python train.py` to process data. Ensure your training script exports the model as a `.joblib` file and places it in the `backend/` directory.
 
 ## 🛡️ License
 Distributed under the MIT License.

@@ -1,14 +1,13 @@
-import pickle
+import joblib
 import os
 import pandas as pd
 import numpy as np
 
-# Path to the trained model
-MODEL_PATH = os.path.join(os.path.dirname(__file__), '..', 'ml', 'rain_model.pkl')
+# Path to the trained model (now compressed with joblib)
+MODEL_PATH = os.path.join(os.path.dirname(__file__), 'rain_model.joblib')
 
 if os.path.exists(MODEL_PATH):
-    with open(MODEL_PATH, 'rb') as f:
-        model = pickle.load(f)
+    model = joblib.load(MODEL_PATH)
 else:
     model = None
 
