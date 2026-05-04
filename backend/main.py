@@ -9,7 +9,7 @@ app = FastAPI(title="Weather Dashboard API")
 # --- CORS CONFIGURATION ---
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://weather-dashboard-teal-phi.vercel.app"],  # Update with your actual Vercel frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
