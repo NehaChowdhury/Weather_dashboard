@@ -68,7 +68,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES=60
 
 Start the backend:
 ```bash
-uvicorn main:app --reload --host 127.0.0.1 --port 8000
+uvicorn main:app --reload
 ```
 
 ### 2. Frontend Setup
@@ -88,9 +88,6 @@ Open the app at `http://localhost:5173`.
 ### Local Dev Notes
 - Backend base URL: `http://127.0.0.1:8000`
 - Frontend base URL: `http://localhost:5173`
-- If CORS errors appear, restart the backend after updating `backend/main.py` and ensure `http://localhost:5173` / `http://127.0.0.1:5173` are allowed origins.
-- If `weather` returns `404`, verify the request includes `city=<city name>` and that the backend is running.
-
 ---
 
 ## 🧪 Machine Learning Model
