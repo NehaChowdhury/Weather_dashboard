@@ -85,11 +85,6 @@ Open the app at `http://localhost:5173`.
 - `POST /auth/login` — authenticate
 - `GET /weather?city=London&query=will+it+rain` — fetch weather and chat response
 
-### Local Dev Notes
-- Backend base URL: `http://127.0.0.1:8000`
-- Frontend base URL: `http://localhost:5173`
----
-
 ## 🧪 Machine Learning Model
 The project uses a compressed Random Forest model (`backend/rain_model.joblib`) trained with the `ml/weatherAUS.csv` dataset.
 The dataset is based on the Kaggle Weather in Australia dataset:
